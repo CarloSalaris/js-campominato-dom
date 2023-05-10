@@ -23,19 +23,6 @@
     align-items: center;
 }
 
-.hide {
-    display: none;
-}
-
-.show {
-    display: block;
-}
-
-.blue_bg {
-    background-color: cornflowerblue;
-    color: #fff;
-}
-
 /*****************************
     STRUCTURE
 ******************************/
@@ -49,6 +36,9 @@ header,
     gap: 50px;
 }
 
+#scoreOutputContainer {
+    text-align: center;
+}
 
 #container {
     background-color: aquamarine;
@@ -61,6 +51,10 @@ header,
     max-width: 900px;
     aspect-ratio: 1/1;
     /* border: solid 1px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 /*****************************

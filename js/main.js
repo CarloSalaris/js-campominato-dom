@@ -10,54 +10,17 @@
 Altrimenti la cella cliccata si colora di azzurro e l’utente può continuare a cliccare sulle altre celle. (punti ++)
 
 3) La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
-    SE clicca sulla bomba O raggiunge punteggio massimo (maxNum - 16) --> Fine del gioco
+    SE clicca sulla bomba OPPURE raggiunge punteggio massimo (maxNum - 16) --> Fine del gioco
 
 Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
 
 ***************************/
 
-/* SVOLGIMENTO */
 
-//1) ARRAY BOMBE = 16 NUMERI RANDOM TRA 1 E numMax
-
-//Genera numero random
-function randomNumMax(numMax) {
-    return Math.floor(Math.random() * numMax) + 1
-}
-// console.log("A random number between 1 and 100: " + randomNumMax(100));
-
-//ARRAY di numeri casuali in un range definito
-function createRandomNumMaxArr(numMax, arrLengthMax) {
-    const intArr = [];
-
-    //Popola array con (arrLengthMax) numeri random tra 1 e numMax
-    while (intArr.length < arrLengthMax) {
-        const newNum = randomNumMax(numMax);
-        if (!intArr.includes(newNum)) {
-            intArr.push(newNum)
-        }
-    }
-    
-    /* for (let i = 0; i < arrLengthMax; i++) {
-        const newNum = randomNumMax(numMax);
-        if (!intArr.includes(newNum)) {
-            intArr.push(newNum)
-        }
-    } */
-    // PERCHÉ FOR LOOP OUTPUTS RANDOM ARRAY.LENGHT?
-
-    return intArr;
-}
-
-
-//2) AL CLICK CONFRONTARE NUMERO CELLA CON ARRAY BOMBE
-   // Inserito nell'evento "click" del quadrato, all'interno della funzione "startClickFunction"  
-
-
-
-// Dichiaro elemento GRIGLIA e elemento BUTTON
+// Dichiaro elemento GRIGLIA, BUTTON E PUNTEGGIO
     const gridElement = document.getElementById("grid");
     const startButton = document.getElementById("startGame");
+    const scoreOutput = document.getElementById("scoreOutput");
 
     // Assegno evento "click" al Button per fare apparire la griglia a seconda dei livelli di difficoltà.
     startButton.addEventListener("click",
@@ -70,7 +33,7 @@ function createRandomNumMaxArr(numMax, arrLengthMax) {
 
             // Stabilisco output a seconda del livello
             if (diffLevel == 2){
-                c(81, "calc(100% / 9)");
+                startClickFunction(81, "calc(100% / 9)");
                 console.log("Hai selezionato il livello medio");
 
             }else if (diffLevel == 3) {
@@ -94,8 +57,7 @@ function startClickFunction(maxNum, elementWidth) {
 
     //Svuoto la griglia
     gridElement.innerHTML = "";
-    //Mostra griglia nascosta
-    showHiddenElement(gridElement);
+    
     let bombsArray = createRandomNumMaxArr(100, 16)
     console.log(bombsArray);
     let score = 0;
@@ -124,16 +86,35 @@ function startClickFunction(maxNum, elementWidth) {
                     this.style.backgroundColor = "red";
                     this.style.color = "#fff";
                     
-                    console.log("bomba! Hai perso");
+                    //OUTPUT
+                    console.log(
+                    `BOOM! Hai perso. Il tuo punteggio totale è: ${score}`
+                    );
+                    
+                    alert(
+                    `BOOM! Hai perso. Il tuo punteggio totale è: ${score}`
+                    )
+                    
+                    resetAll();
+
                 }else {
                     // la cella cliccata si colora di azzurro
-                    this.classList.add("blue_bg");
+                    this.style.backgroundColor = "cornflowerblue";
+                    this.style.color = "#fff";
 
                     score++;
+                    scoreOutput.innerHTML = score;
 
                     // emetto un messaggio in console con il numero della cella cliccata.
-                    console.log("the number you selected is: " + i + "and your score is: " + score)
-                }              
+                    console.log(`the number you selected is: ${i} and your score is: ${score}`)
+
+                    if (score == maxNum - 16) {
+
+                        alert(`HAI VINTO! Hai raggiunto il punteggio massimo di ${maxNum - 16}`)
+                        
+                        resetAll();
+                    }
+                }
             }
         );
     }
@@ -154,6 +135,46 @@ function createGridSquare(tagType, classToAdd, elementWidth) {
     newElement.style.width = elementWidth;
     return newElement;
 };
+
+// Resetta pagina vuota con messaggio iniziale + punteggio: 0
+function resetAll() {
+    //Svuoto la griglia
+    gridElement.innerHTML =
+                            `<span>
+                                COMINCIA UNA PARTITA...
+                                <br>BUONA FORTUNA!
+                            </span>`;
+    //resetto il punteggio
+    scoreOutput.innerHTML = 0;    
+};
+
+// Genera numero random
+function randomNumMax(numMax) {
+    return Math.floor(Math.random() * numMax) + 1
+}
+
+// ARRAY di numeri casuali in un range definito
+function createRandomNumMaxArr(numMax, arrLengthMax) {
+    const intArr = [];
+
+    //Popola array con (arrLengthMax) numeri random tra 1 e numMax
+    while (intArr.length < arrLengthMax) {
+        const newNum = randomNumMax(numMax);
+        if (!intArr.includes(newNum)) {
+            intArr.push(newNum)
+        }
+    }
+    
+    /* for (let i = 0; i < arrLengthMax; i++) {
+        const newNum = randomNumMax(numMax);
+        if (!intArr.includes(newNum)) {
+            intArr.push(newNum)
+        }
+    } */
+    // PERCHÉ FOR LOOP OUTPUTS RANDOM ARRAY.LENGHT?
+
+    return intArr;
+}
 
 /***************************
     REFACTORING NOTES
