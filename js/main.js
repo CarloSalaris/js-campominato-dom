@@ -18,7 +18,7 @@ Al termine della partita il software deve comunicare il punteggio, cioè il nume
 
 /* SVOLGIMENTO */
 
-//1)
+//1) ARRAY BOMBE = 16 NUMERI RANDOM TRA 1 E numMax
 
 //Genera numero random
 function randomNumMax(numMax) {
@@ -50,8 +50,8 @@ function createRandomNumMaxArr(numMax, arrLengthMax) {
 }
 
 
-//2)
-
+//2) AL CLICK CONFRONTARE NUMERO CELLA CON ARRAY BOMBE
+   // Inserito nell'evento "click" del quadrato, all'interno della funzione "startClickFunction"  
 
 
 
@@ -70,7 +70,7 @@ function createRandomNumMaxArr(numMax, arrLengthMax) {
 
             // Stabilisco output a seconda del livello
             if (diffLevel == 2){
-                startClickFunction(81, "calc(100% / 9)");
+                c(81, "calc(100% / 9)");
                 console.log("Hai selezionato il livello medio");
 
             }else if (diffLevel == 3) {
@@ -98,6 +98,7 @@ function startClickFunction(maxNum, elementWidth) {
     showHiddenElement(gridElement);
     let bombsArray = createRandomNumMaxArr(100, 16)
     console.log(bombsArray);
+    let score = 0;
 
     //Creo un loop che si ripeta tante volte quante il valore massimo prestabilito
     for (let i = 1; i <= maxNum; i++) {
@@ -117,13 +118,24 @@ function startClickFunction(maxNum, elementWidth) {
         //associo l'evento click a ogni nuovo quadrato creato
         newSquare.addEventListener("click",
             function() {
-                // la cella cliccata si colora di azzurro
-                this.classList.add("blue_bg");
-                // emetto un messaggio in console con il numero della cella cliccata.
-                console.log("the number you selected is: " + i)
+
+                if (bombsArray.includes(i)) {
+                    // la cella cliccata si colora di rosso
+                    this.style.backgroundColor = "red";
+                    this.style.color = "#fff";
+                    
+                    console.log("bomba! Hai perso");
+                }else {
+                    // la cella cliccata si colora di azzurro
+                    this.classList.add("blue_bg");
+
+                    score++;
+
+                    // emetto un messaggio in console con il numero della cella cliccata.
+                    console.log("the number you selected is: " + i + "and your score is: " + score)
+                }              
             }
         );
-
     }
 };
 
