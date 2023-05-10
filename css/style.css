@@ -1,0 +1,68 @@
+
+/*****************************
+    GENERAL
+******************************/
+* {
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*****************************
+    UTILITIES
+******************************/
+.square {
+    float: left;
+    /* width: calc(100% / 10); */
+    /* height: calc(100% / 10); */
+    aspect-ratio: 1/1;
+    border: solid 1px black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.blue_bg {
+    background-color: cornflowerblue;
+    color: #fff;
+}
+
+/*****************************
+    STRUCTURE
+******************************/
+header,
+#container {
+    padding: 10px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+
+#container {
+    background-color: aquamarine;
+    min-height: 300px;
+
+}
+
+#grid {
+    width: 70%;
+    max-width: 900px;
+    aspect-ratio: 1/1;
+    /* border: solid 1px; */
+}
+
+/*****************************
+    DEBUG
+******************************/
